@@ -6,4 +6,5 @@ public interface CustomerService {
 
     public Customer saveCustomer(Customer customer, String id);
     public Customer updateCustomer(String email, String id);
+    public Customer saveCustomer(Customer customer);
 }

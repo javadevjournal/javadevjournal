@@ -1,35 +1,12 @@
 package com.javadevjournal.restexample.data;
 
-import javax.persistence.*;
+public class Registration {
 
-@Entity
-@Table(name = "customer")
-public class Customer {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
     private String firstName;
     private String lastName;
     private String email;
-    private  int age;
-
-    public Customer() {
-    }
-
-    public Customer(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private int age;
+    private String password;
 
     public String getFirstName() {
         return firstName;
@@ -61,5 +38,13 @@ public class Customer {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

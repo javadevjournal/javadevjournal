@@ -27,4 +27,9 @@ public class DefaultCustomerService implements CustomerService {
         customer.setEmail(email);
         return customerRepository.save(customer);
     }
+
+    @Override
+    public Customer saveCustomer(Customer customer) {
+        return customerRepository.save(customer);
+    }
 }
