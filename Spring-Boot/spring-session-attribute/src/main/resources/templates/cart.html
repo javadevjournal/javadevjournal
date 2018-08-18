@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shopping Cart Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Product Detail</h1>
+<h1>Product list</h1>
+
+<table>
+    <tr>
+        <th>Product Code Code</th>
+    </tr>
+    <tr th:each="prod : ${cart.products}">
+        <td th:text="${prod}">Onions</td>
+    </tr>
+</table>
+</body>
+</html>
