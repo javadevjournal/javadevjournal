@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Demo Application to demonstrae @ModelAttribute annotation</title>
+</head>
+<body>
+<h4>Country List</h4>
+<tr th:each="country: ${countries}">
+    <td th:text="${country}" />
+    <td><br/></td>
+</tr>
+<h4>States</h4>
+<tr th:each="state: ${states}">
+    <td th:text="${state}" />
+    <td><br/></td>
+</tr>
+
+</body>
+</html>
