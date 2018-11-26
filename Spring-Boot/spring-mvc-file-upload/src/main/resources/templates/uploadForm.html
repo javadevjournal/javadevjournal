@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:if="${uploadedFile}">
+    <h2> Uploaded File Details </h2>
+    <table>
+        <tr th:each="file: ${uploadedFile}">
+            <td th:text="${file.originalFilename}">File Name</td>
+            <td th:text="${file.contentType}">File Type:</td>
+        </tr>
+    </table>
+</div>
+<div>
+    <h2> Uploaded New File </h2>
+    <form method="POST" enctype="multipart/form-data" action="/saveFiles">
+        <table>
+            <tr><td>File to upload 1:</td><td><input type="file" name="files" /></td></tr>
+            <tr><td>File to upload 2:</td><td><input type="file" name="files" /></td></tr>
+            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
