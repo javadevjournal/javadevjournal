@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:if="${uploadedFile}">
+    <h2> Uploaded File Details </h2>
+    <table>
+        <tr>
+            ${uploadedFile}
+            <td>FileName:</td>
+            <td>${uploadedFile.fileName}</td>
+        </tr>
+        <tr>
+            <td>Type:</td>
+            <td>${uploadedFile.contentType}</td>
+        </tr>
+    </table>
+</div>
