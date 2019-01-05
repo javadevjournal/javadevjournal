@@ -1,8 +1,7 @@
 # Java Dev Journal
-
 Java and Spring development tutorials
 
-**[Java Dev Journal][Java Dev Journal]** is a techinical blog which publish articles, blog post on the following topics:
+**[Java Dev Journal][Java Dev Journal]** is a technical blog which publish articles, blog post on the following topics:
 
 
 - [Java][Java]
@@ -16,7 +15,7 @@ Java and Spring development tutorials
 
 ## Spring Boot Course
 
-If you are starting with the Spring Boot, we have a free course on the Spring Boot.Our free Spring Boot course start from the basisc and sring you to the speed with the advance concepts of the Spring Boot.The course includes free video lessons to help you lean the concepts more easily.
+If you are starting with the Spring Boot, we have a free course on the Spring Boot.Our free Spring Boot course start from the basic and bring you to the speed with the advance concepts of the Spring Boot.The course includes free video lessons to help you lean the concepts more easily.
 
 <img src="https://prod-acb5.kxcdn.com/wp-content/uploads/2018/02/spring-boot-icon-200x196.png" height="100">
 
@@ -35,7 +34,7 @@ Leanr fundamentals of building REST API with Spring. Our free course will help y
 
 ## Techinical Interview Series
 
-If you are preparing for your next job interview, we do have a interview series to help you prepare for your next job.
+If you are preparing for your next job interview, we have an interview series to help you prepare for your next job.
 
 - [Spring Core Interview Q/A][Spring Core Interview Q/A]
 - [Spring MVC Interview Questions with Answers][Spring MVC Interview Questions with Answers]
@@ -54,7 +53,7 @@ This repository contains the source code for all the artcile published on the [J
 
 ### Building the Project
 
-To build these maven based projects,run the following command:
+To build these mavens based projects,run the following command:
 `mvn clean install`
 
 
@@ -65,7 +64,7 @@ To run a Spring Boot module run the command:
 
 ### Running Java Project
 
-Simply find the `main` class and run it.
+Find the `main` class and run it.
 
 ## Few Popular Articles on [Java Dev Journal][Java Dev Journal]
 
