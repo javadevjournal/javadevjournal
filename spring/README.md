@@ -1,9 +1,7 @@
-Test
 # Java Dev Journal
-
 Java and Spring development tutorials
 
-**[Java Dev Journal][Java Dev Journal]** is a techinical blog which publish articles, blog post on the following topics:
+**[Java Dev Journal][Java Dev Journal]** is a technical blog which publish articles, blog post on the following topics:
 
 
 - [Java][Java]
@@ -16,7 +14,7 @@ Java and Spring development tutorials
 
 
 
-## Refrence Articles
+## Reference Articles
 
 - [REST Pagination in Spring](https://www.javadevjournal.com/spring/rest-pagination-in-spring/)
 - [Spring Caching](https://www.javadevjournal.com/spring/spring-caching/)
@@ -26,7 +24,7 @@ Java and Spring development tutorials
 
 ### Building the Project
 
-To build these maven based projects,run the following command:
+To build these mavens based projects,run the following command:
 `mvn clean install`
 
 
