@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Bean Validation - JSR 303</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Customer</h1>
+<form action="#" th:action="@{/customer}" th:object="${customer}" method="post">
+    <p>name: <input type="text" th:field="*{name}" />
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:style="'color:red'"></span>
+    </p>
+    <p>email: <input type="text" th:field="*{email}" />
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:style="'color:red'"></span>
+    </p>
+    <p>age: <input type="text" th:field="*{age}" />
+        <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}" th:style="'color:red'"></span>
+    </p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>
