@@ -1,4 +1,4 @@
-package data;
+package spliterator;
 
 import java.util.ArrayList;
 import java.util.List;

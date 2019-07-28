@@ -1,4 +1,4 @@
-package data;
+package spliterator;
 
 public class Student {
     String name;
