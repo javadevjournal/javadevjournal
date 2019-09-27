@@ -1,0 +1,85 @@
+= How to generate document using Spring REST Doc API
+Javadevjournal<contact-us@javadevjournal.com> 1.0.0;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:sectnums:
+
+[[overview]]
+= Overview
+
+[[overview-http-verbs]]
+== HTTP verbs
+
+RESTful notes tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP verbs.
+
+|===
+| Verb | Usage
+
+| `GET`
+| Used to retrieve a resource
+
+| `POST`
+| Used to create a new resource
+
+| `PATCH`
+| Used to update an existing resource, including partial updates
+
+| `DELETE`
+| Used to delete an existing resource
+|===
+
+RESTful notes tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP status codes.
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| The request completed successfully
+
+| `201 Created`
+| A new resource has been created successfully. The resource's URI is available from the response's
+`Location` header
+
+| `204 No Content`
+| An update to an existing resource has been applied successfully
+
+| `400 Bad Request`
+| The request was malformed. The response body will include an error providing further information
+
+| `404 Not Found`
+| The requested resource did not exist
+|===
+
+[[overview-hypermedia]]
+== Hypermedia
+
+RESTful Notes uses hypermedia and resources include links to other resources in their
+responses. Responses are in http://stateless.co/hal_specification.html[Hypertext Application
+from resource to resource.
+Language (HAL)] format. Links can be found beneath the `_links` key. Users of the API should
+not create URIs themselves, instead they should use the above-described links to navigate
+
+=== Get Product By Id
+Obtains a specific products by its unique identifier.
+
+==== Sample Request
+include::{snippets}/product/get-product-by-id/http-request.adoc[]
+
+==== Sample Response
+include::{snippets}/product/get-product-by-id/http-response.adoc[]
+
+==== CURL sample
+include::{snippets}/product/get-product-by-id/curl-request.adoc[]
+
+==== Path Parameters
+include::{snippets}/product/get-product-by-id/path-parameters.adoc[]
+
+
+==== Response Fields
+include::{snippets}/product/get-product-by-id/response-fields.adoc[]
