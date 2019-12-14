@@ -8,8 +8,31 @@
     </service>
 
     <cache alias="customer">
-        <key-type>java.lang.Long</key-type>
-        <value-type>com.javadevjournal.data.Customer</value-type>
+    <key-type>java.lang.Long</key-type>
+    <value-type>com.javadevjournal.data.Customer</value-type>
+    <expiry>
+        <ttl unit="seconds">10</ttl>
+    </expiry>
+    <listeners>
+        <listener>
+            <class>com.javadevjournal.config.CustomCacheEventLogger</class>
+            <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
+            <event-ordering-mode>UNORDERED</event-ordering-mode>
+            <events-to-fire-on>CREATED</events-to-fire-on>
+            <events-to-fire-on>UPDATED</events-to-fire-on>
+            <events-to-fire-on>EXPIRED</events-to-fire-on>
+            <events-to-fire-on>REMOVED</events-to-fire-on>
+            <events-to-fire-on>EVICTED</events-to-fire-on>
+        </listener>
+    </listeners>
+    <resources>
+        <heap unit="entries">2000</heap>
+        <offheap unit="MB">100</offheap>
+    </resources>
+</cache>
+    <cache alias="customerList">
+        <key-type>java.lang.String</key-type>
+        <value-type>java.util.ArrayList</value-type>
         <expiry>
             <ttl unit="seconds">10</ttl>
         </expiry>

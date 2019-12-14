@@ -6,6 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CustomerService {
 
@@ -21,5 +24,20 @@ public class CustomerService {
         customer.setLastName("User");
         customer.setEmail("contact-us@javadevjournlal.com");
         return  customer;
+    }
+
+    @Cacheable(cacheNames = "customerList",key = "'customerList'")
+    public List<Customer> getCustomers(){
+        List<Customer> customers = new ArrayList<>();
+        LOG.info("Returning customer list");
+        for(int i=0; i< 4; i++){
+            Customer customer = new Customer();
+            customer.setCustomerId(Long.valueOf(i));
+            customer.setFirstName("FirstName"+i);
+            customer.setLastName("LastName"+i);
+            customer.setEmail("contact-us@javadevjournlal.com"+i);
+            customers.add(customer);
+        }
+        return customers;
     }
 }
