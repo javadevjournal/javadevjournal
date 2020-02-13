@@ -1,11 +1,14 @@
 package com.javadevjournal.data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Customer {
 
     @Id
@@ -14,6 +17,14 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String email;
+
+    @Column(updatable = false, nullable = false)
+    @CreatedDate
+    private LocalDateTime createdTime;
+
+    @Column(nullable = false)
+    @LastModifiedDate
+    private LocalDateTime updatedTime;
 
     public Customer() {
     }
@@ -51,6 +62,22 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public LocalDateTime getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(LocalDateTime updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     @Override

@@ -8,8 +8,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
+@EnableJpaAuditing
 public class SpringBootHibernateApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(SpringBootHibernateApplication.class);
@@ -18,7 +20,7 @@ public class SpringBootHibernateApplication {
 		SpringApplication.run(SpringBootHibernateApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner demo(CustomerRepository repository) {
 		return (args) -> {
 
@@ -33,5 +35,5 @@ public class SpringBootHibernateApplication {
 				log.info(customer.toString());
 			}
 		};
-	}
+	}*/
 }
