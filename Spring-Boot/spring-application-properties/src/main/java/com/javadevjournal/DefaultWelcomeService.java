@@ -23,7 +23,8 @@ public class DefaultWelcomeService {
     /*public void DefaultWelcomeService(@Value("${javadevjournal.init.secret.key}") String secretKey, @Value("${javadevjournal.max.login.retry}") int retry, @Value("${javadevjournal.enable.guest.checkout}") boolean enableGuestCheckout){
         this.secretKey = secretKey;
         LOG.info("@Value annotation is working for our secret key {}",secretKey);
-    } */
+    }
+    */
 
     public String getGreetingMessage(){
         LOG.info("Welcome newKeys {} ", newKeys);
