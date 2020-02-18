@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class SpringApplicationPropertiesApplication {
-    //MAIN APPLICATION
+    //main comment to test
 	public static void main(String[] args) {
 		SpringApplication.run(SpringApplicationPropertiesApplication.class, args);
 	}
