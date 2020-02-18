@@ -24,7 +24,7 @@ public class DefaultWelcomeService {
         this.secretKey = secretKey;
         LOG.info("@Value annotation is working for our secret key {}",secretKey);
     }
-    */
+ */
 
     public String getGreetingMessage(){
         LOG.info("Welcome newKeys {} ", newKeys);
