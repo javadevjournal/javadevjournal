@@ -1,8 +1,18 @@
 package com.ayoosh.profilemanagement.domain;
 
-public class EmployeeProfile {
-	private int id;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "employee_profile")
+public class EmployeeProfile {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "address")
+	private String address;
 	public int getId() {
 		return id;
 	}
@@ -27,6 +37,5 @@ public class EmployeeProfile {
 		this.address = address;
 	}
 
-	private String name;
-	private String address;
+
 }
