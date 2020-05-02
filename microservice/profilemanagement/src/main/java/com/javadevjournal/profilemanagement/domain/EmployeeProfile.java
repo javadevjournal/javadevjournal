@@ -1,4 +1,4 @@
-package com.ayoosh.profilemanagement.domain;
+package com.javadevjournal.profilemanagement.domain;
 
 import javax.persistence.*;
 

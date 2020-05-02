@@ -1,7 +1,7 @@
-package com.ayoosh.profilemanagement.service;
+package com.javadevjournal.profilemanagement.service;
 
-import com.ayoosh.profilemanagement.dao.ProfileRepository;
-import com.ayoosh.profilemanagement.domain.EmployeeProfile;
+import com.javadevjournal.profilemanagement.dao.ProfileRepository;
+import com.javadevjournal.profilemanagement.domain.EmployeeProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

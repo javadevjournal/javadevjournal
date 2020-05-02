@@ -1,10 +1,10 @@
-package com.ayoosh.profilemanagement;
+package com.javadevjournal.configserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProfilemanagementApplicationTests {
+class ConfigserverApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -1,4 +1,4 @@
-package com.ayoosh.profilemanagement;
+package com.javadevjournal.profilemanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

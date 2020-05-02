@@ -1,7 +1,7 @@
-package com.ayoosh.profilemanagement.controller;
+package com.javadevjournal.profilemanagement.controller;
 
-import com.ayoosh.profilemanagement.domain.EmployeeProfile;
-import com.ayoosh.profilemanagement.service.EmployeeProfileService;
+import com.javadevjournal.profilemanagement.domain.EmployeeProfile;
+import com.javadevjournal.profilemanagement.service.EmployeeProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

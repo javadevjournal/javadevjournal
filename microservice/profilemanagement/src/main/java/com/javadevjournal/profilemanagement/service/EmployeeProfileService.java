@@ -1,6 +1,6 @@
-package com.ayoosh.profilemanagement.service;
+package com.javadevjournal.profilemanagement.service;
 
-import com.ayoosh.profilemanagement.domain.EmployeeProfile;
+import com.javadevjournal.profilemanagement.domain.EmployeeProfile;
 
 import java.util.List;
 
