@@ -14,7 +14,7 @@
 		<version>2.2.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ayoosh</groupId>
+	<groupId>com.javadevjournal</groupId>
 	<artifactId>microservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>microservice</name>
