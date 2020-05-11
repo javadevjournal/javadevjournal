@@ -3,7 +3,6 @@ spring:
     name: 'eurekaclient2'
 server:
   port: 8085
-
 eureka:
   instance:
     hostname: ${vcap.application.uris[0]:localhost}
