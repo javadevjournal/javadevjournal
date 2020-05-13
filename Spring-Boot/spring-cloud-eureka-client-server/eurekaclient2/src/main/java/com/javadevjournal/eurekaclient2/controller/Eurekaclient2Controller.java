@@ -11,8 +11,9 @@ import java.util.UUID;
 
 @RestController
 public class Eurekaclient2Controller {
+    private List<Product> productList = new ArrayList<>();
     static{
-        List<Product> productList = new ArrayList<>();
+        productList = new ArrayList<>();
         Product p1 = new Product(UUID.randomUUID(), "Guitar" , 99.99, "Music");
         Product p2 = new Product(UUID.randomUUID(), "AWS Book" , 29.99, "Books");
         Product p3 = new Product(UUID.randomUUID(), "Bread" , 9.99, "Food");
