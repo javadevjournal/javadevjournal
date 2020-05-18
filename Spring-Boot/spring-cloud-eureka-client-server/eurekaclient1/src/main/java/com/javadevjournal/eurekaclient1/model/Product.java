@@ -1,4 +1,4 @@
-package com.javadevjournal.eurekaclient2.model;
+package com.javadevjournal.eurekaclient1.model;
 import java.util.Objects;
 import java.util.UUID;
 
