@@ -1,0 +1,9 @@
+camel:
+  component:
+    servlet:
+      mapping:
+        contextPath: /javadevjournal/*
+
+discount:
+  newDiscountPeriod: 2000
+  listDiscountPeriod: 6000
