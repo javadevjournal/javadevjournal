@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
 
+/**
+ * @Author - Kunwar Vikas
+ */
 public class SBWriter implements ItemWriter<String> {
 	Logger logger = LoggerFactory.getLogger(SBWriter.class);
 	@Override
