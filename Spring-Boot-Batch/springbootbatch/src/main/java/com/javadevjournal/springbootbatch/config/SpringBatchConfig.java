@@ -1,9 +1,10 @@
 package com.javadevjournal.springbootbatch.config;
 
+import com.javadevjournal.springbootbatch.listener.SpringBatchJobCompletionListener;
 import com.javadevjournal.springbootbatch.listener.SpringBatchJobExecutionListener;
 import com.javadevjournal.springbootbatch.listener.SpringBatchStepListener;
-import com.javadevjournal.springbootbatch.model.Employee;
-import com.javadevjournal.springbootbatch.step.EmployeeItemProcessor;
+import com.javadevjournal.springbootbatch.model.StockInfo;
+import com.javadevjournal.springbootbatch.step.StockInfoProcessor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
@@ -18,11 +19,8 @@ import org.springframework.batch.item.file.transform.PassThroughLineAggregator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.javadevjournal.springbootbatch.listener.SpringBatchJobCompletionListener;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.scheduling.annotation.Scheduled;
 
 /**
  * @Author - Kunwar Vikas
@@ -50,9 +48,9 @@ public class SpringBatchConfig {
     public Step StockPricesInfoStep() {
         return stepBuilderFactory.get("step1")
                 .listener(new SpringBatchStepListener())
-                .<Employee, String>chunk(10)
+                .<StockInfo, String>chunk(10)
                 .reader(reader())
-                .processor(processor())
+                .processor(stockInfoProcessor())
                 .writer(writer())
                 .faultTolerant()
                 .retryLimit(3)
@@ -61,19 +59,19 @@ public class SpringBatchConfig {
     }
 
     @Bean
-    public FlatFileItemReader<Employee> reader() {
-        return new FlatFileItemReaderBuilder<Employee>()
+    public FlatFileItemReader<StockInfo> reader() {
+        return new FlatFileItemReaderBuilder<StockInfo>()
                 .name("stockInfoItemReader")
                 .resource(new ClassPathResource("csv/stockinfo.csv"))
                 .delimited()
                 .names(new String[] {"stockId", "stockName","stockPrice","yearlyHigh","yearlyLow","address","sector","market"})
-                .targetType(Employee.class)
+                .targetType(StockInfo.class)
                 .build();
     }
 
     @Bean
-    public EmployeeItemProcessor processor() {
-        return new EmployeeItemProcessor();
+    public StockInfoProcessor stockInfoProcessor(){
+	    return new StockInfoProcessor();
     }
 
     @Bean
@@ -82,7 +80,8 @@ public class SpringBatchConfig {
                 .name("stockInfoItemWriter")
                 .resource(new FileSystemResource(
                         "target/output.txt"))
-                .lineAggregator(new PassThroughLineAggregator<>()).build();
+                .lineAggregator(new PassThroughLineAggregator<>())
+				.build();
     }
 
 	@Bean
