@@ -1,6 +1,5 @@
 package com.javadevjournal.springbootbatch.listener;
 
-import com.javadevjournal.springbootbatch.step.SBWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
@@ -10,9 +9,9 @@ import org.springframework.batch.core.StepExecutionListener;
 /**
  * @Author - Kunwar Vikas
  */
-public class SPStepListener implements StepExecutionListener {
+public class SpringBatchStepListener implements StepExecutionListener {
 
-    Logger logger = LoggerFactory.getLogger(SPStepListener.class);
+    Logger logger = LoggerFactory.getLogger(SpringBatchStepListener.class);
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
