@@ -5,6 +5,9 @@ import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 
+/**
+ * @Author - Kunwar Vikas
+ */
 public class SBReader implements ItemReader<String> {
 
 	private String[] messages = { "javadevjournal.com",

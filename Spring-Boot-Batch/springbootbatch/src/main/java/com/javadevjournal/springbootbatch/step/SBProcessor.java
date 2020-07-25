@@ -2,6 +2,9 @@ package com.javadevjournal.springbootbatch.step;
 
 import org.springframework.batch.item.ItemProcessor;
 
+/**
+ * @Author - Kunwar Vikas
+ */
 public class SBProcessor implements ItemProcessor<String, String> {
 
 	@Override
