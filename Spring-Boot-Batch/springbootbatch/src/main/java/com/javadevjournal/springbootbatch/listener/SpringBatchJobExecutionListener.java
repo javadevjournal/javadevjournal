@@ -9,9 +9,9 @@ import org.springframework.batch.core.JobExecutionListener;
 /**
  * @Author - Kunwar Vikas
  */
-public class SPJobExecutionListener implements JobExecutionListener {
+public class SpringBatchJobExecutionListener implements JobExecutionListener {
 
-    Logger logger = LoggerFactory.getLogger(SPJobExecutionListener.class);
+    Logger logger = LoggerFactory.getLogger(SpringBatchJobExecutionListener.class);
 
     public void beforeJob(JobExecution jobExecution) {
         logger.info("BEFORE BATCH JOB STARTS");
