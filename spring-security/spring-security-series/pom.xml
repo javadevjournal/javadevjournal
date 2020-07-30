@@ -19,6 +19,11 @@
 	</properties>
 
 	<dependencies>
+		<!-- we need dev tool only for development and not for the production -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>

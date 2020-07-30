@@ -38,6 +38,6 @@ public class RegistrationController {
             model.addAttribute("registrationForm", userData);
             return "account/register";
         }
-        return REDIRECT+"/starter";
+        return REDIRECT+"account/starter";
     }
 }

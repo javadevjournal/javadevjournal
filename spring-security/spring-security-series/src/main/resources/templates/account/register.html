@@ -1,22 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Java Dev Journal | Registration Page</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet"  th:href="@{/plugins/fontawesome-free/css/all.min.css}">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<head th:replace="core/header :: head">
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
@@ -27,7 +11,6 @@
   <div class="card">
     <div class="card-body register-card-body">
       <p class="login-box-msg">Register a new account</p>
-
       <form action="#" th:action="@{/register}" th:object="${userData}" method="post">
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
           <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
@@ -92,7 +75,7 @@
         </div>
       </form>
 
-      <a href="login.html" class="text-center">I already have an Account</a>
+      <a href="login" class="text-center">I already have an Account</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
