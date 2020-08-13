@@ -27,7 +27,7 @@ public class AppSecurityConfig  extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login", "/register")
                 .permitAll()
-                .antMatchers("/account/**").access("hasRole('ROLE_USER')")
+                .antMatchers("/account/**").hasAuthority("USER")
                 .and()
                 .formLogin(form -> form
                         .loginPage("/login")

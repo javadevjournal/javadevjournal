@@ -3,19 +3,31 @@
 <head th:replace="core/header :: head">  <meta charset="utf-8">
 </head>
 <body class="hold-transition login-page">
+
 <div class="login-box">
+  <div class="col-md-12">
+    <div class="form-group" data-select2-id="13">
+      <label>Select Language</label>
+      <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1"
+              tabindex="-1" aria-hidden="true" id="locale">
+        <option value="en" th:text="#{lang.eng}"  th:selected="__${#locale}__=='en'"></option>
+        <option value="de" th:text="#{lang.de}" th:selected="__${#locale}__=='de'"></option>
+      </select>
+    </div>
+  </div>
   <div class="login-logo">
     <a href="#">Welcome to Spring Security Course</a>  </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
-      <p th:if="${loginError}" class="error">Wrong user or password</p>
+      <p th:if="${loginError}" class="error"></p>
       <form th:action="@{/login}" method="post">
         <div th:if="${param.error}">
         <div class="alert alert-danger">
-          Invalid username or password.
+          <span th:text="#{login.error}"/>
         </div>
+
       </div>
         <div class="input-group mb-3">
           <input type="email" class="form-control" name="username" placeholder="Email">
@@ -80,6 +92,16 @@
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#locale").change(function () {
+            var selectedOption = $('#locale').val();
+            if (selectedOption != '') {
+                window.location.replace('?lang=' + selectedOption);
+            }
+        });
+    });
 
+</script>
 </body>
 </html>

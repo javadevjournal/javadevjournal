@@ -1,5 +1,6 @@
 package com.javadevjournal.user.jpa.data;
 
+
 import javax.persistence.*;
 
 @Entity
