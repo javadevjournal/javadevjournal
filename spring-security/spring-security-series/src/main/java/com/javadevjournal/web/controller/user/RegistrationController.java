@@ -26,8 +26,8 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String userRegistration(final @Valid  UserData userData, final BindingResult bindingResult, final Model model){
-        if(bindingResult.hasErrors()){
+    public String userRegistration(final @Valid  UserData userData, final BindingResult bindingResult, final Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("registrationForm", userData);
             return "account/register";
         }
@@ -38,6 +38,6 @@ public class RegistrationController {
             model.addAttribute("registrationForm", userData);
             return "account/register";
         }
-        return REDIRECT+"account/starter";
+        return REDIRECT + "account/starter";
     }
 }

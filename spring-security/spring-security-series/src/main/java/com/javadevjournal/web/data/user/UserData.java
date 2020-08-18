@@ -2,7 +2,6 @@ package com.javadevjournal.web.data.user;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class UserData implements Serializable {
@@ -13,7 +12,6 @@ public class UserData implements Serializable {
     @NotEmpty(message = "{registration.validation.lastName}")
     private String lastName;
 
-    @NotEmpty(message = "{registration.validation.email}")
     @Email(message = "{registration.validation.email}")
     private String email;
 

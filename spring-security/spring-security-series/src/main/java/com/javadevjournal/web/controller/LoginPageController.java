@@ -12,8 +12,9 @@ public class LoginPageController {
     @GetMapping
     public String login(@RequestParam(value = "error",defaultValue = "false") boolean loginError){
         if(loginError){
-            System.out.println("****************");
+            // do whatever you want to 
         }
         return "account/login";
     }
+
 }

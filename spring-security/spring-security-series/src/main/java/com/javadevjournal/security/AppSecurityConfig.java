@@ -30,8 +30,8 @@ public class AppSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/account/**").hasAuthority("USER")
                 .and()
                 .formLogin(form -> form
+                        .defaultSuccessUrl("/account/home")
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home")
                         .failureUrl("/login?error=true")
                 );
     }
@@ -42,21 +42,18 @@ public class AppSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**", "/static/**");
     }
 
-    /**
-     * <p></p>Configuring DAO based authentication provider by injecting a custom
-     * user details service and password encoder.</p>
-     * @return
-     */
     @Bean
     public DaoAuthenticationProvider authProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder);
-        return authProvider;
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        return authenticationProvider;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth){
         auth.authenticationProvider(authProvider());
     }
+
+
 }
