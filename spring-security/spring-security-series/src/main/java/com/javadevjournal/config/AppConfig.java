@@ -13,7 +13,11 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 
@@ -62,4 +66,6 @@ public class AppConfig implements WebMvcConfigurer {
         bean.setValidationMessageSource(messageSource);
         return bean;
     }
+
+    // setting up thymeleaf for Spring Email TemplateEngine
 }

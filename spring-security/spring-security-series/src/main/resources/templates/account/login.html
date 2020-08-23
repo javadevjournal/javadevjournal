@@ -20,6 +20,12 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
+      <div class="alert alert-success" role="alert" th:if="${verifiedAccountMsg != null}">
+        <p th:text="${verifiedAccountMsg}"></p>
+      </div>
+      <div class="alert alert-danger" role="alert" th:if="${tokenError != null}">
+        <p th:text="${tokenError}"></p>
+      </div>
       <p class="login-box-msg">Sign in to start your session</p>
       <p th:if="${loginError}" class="error"></p>
       <form th:action="@{/login}" method="post">

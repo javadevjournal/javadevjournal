@@ -1,4 +1,4 @@
-package com.javadevjournal.system.exception;
+package com.javadevjournal.core.exception;
 
 /**
  * Exception thrown by system in case some one try to register with already exisiting email
