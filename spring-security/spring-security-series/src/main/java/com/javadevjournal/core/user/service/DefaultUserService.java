@@ -51,6 +51,7 @@ public class DefaultUserService implements UserService{
         encodePassword(user, userEntity);
         userRepository.save(userEntity);
         sendRegistrationConfirmationEmail(userEntity);
+
     }
 
     @Override
@@ -58,17 +59,13 @@ public class DefaultUserService implements UserService{
         return userRepository.findByEmail(email)!=null ? true : false;
     }
 
-    private void encodePassword(UserData source, UserEntity target){
-        target.setPassword(passwordEncoder.encode(source.getPassword()));
-    }
-
     @Override
-    public void sendRegistrationConfirmationEmail(UserEntity userEntity){
-        SecureToken secureToken = secureTokenService.createSecureToken();
-        secureToken.setUser(userEntity);
+    public void sendRegistrationConfirmationEmail(UserEntity user) {
+        SecureToken secureToken= secureTokenService.createSecureToken();
+        secureToken.setUser(user);
         secureTokenRepository.save(secureToken);
         AccountVerificationEmailContext emailContext = new AccountVerificationEmailContext();
-        emailContext.init(userEntity);
+        emailContext.init(user);
         emailContext.setToken(secureToken.getToken());
         emailContext.buildVerificationUrl(baseURL, secureToken.getToken());
         try {
@@ -76,6 +73,7 @@ public class DefaultUserService implements UserService{
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -95,4 +93,10 @@ public class DefaultUserService implements UserService{
         secureTokenService.removeToken(secureToken);
         return true;
     }
+
+    private void encodePassword(UserData source, UserEntity target){
+        target.setPassword(passwordEncoder.encode(source.getPassword()));
+    }
+
+
 }

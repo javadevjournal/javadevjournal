@@ -58,12 +58,12 @@ public class RegistrationController {
 
     @GetMapping("/verify")
     public String verifyCustomer(@RequestParam(required = false) String token, final Model model, RedirectAttributes redirAttr){
-       if(StringUtils.isEmpty(token)){
-           redirAttr.addFlashAttribute("tokenError", messageSource.getMessage("user.registration.verification.missing.token", null,LocaleContextHolder.getLocale()));
-           return REDIRECT_LOGIN;
-       }
+        if(StringUtils.isEmpty(token)){
+            redirAttr.addFlashAttribute("tokenError", messageSource.getMessage("user.registration.verification.missing.token", null,LocaleContextHolder.getLocale()));
+            return REDIRECT_LOGIN;
+        }
         try {
-            userService.verifyUser(token);
+              userService.verifyUser(token);
         } catch (InvalidTokenException e) {
             redirAttr.addFlashAttribute("tokenError", messageSource.getMessage("user.registration.verification.invalid.token", null,LocaleContextHolder.getLocale()));
             return REDIRECT_LOGIN;
@@ -72,4 +72,5 @@ public class RegistrationController {
         redirAttr.addFlashAttribute("verifiedAccountMsg", messageSource.getMessage("user.registration.verification.success", null,LocaleContextHolder.getLocale()));
         return REDIRECT_LOGIN;
     }
+
 }

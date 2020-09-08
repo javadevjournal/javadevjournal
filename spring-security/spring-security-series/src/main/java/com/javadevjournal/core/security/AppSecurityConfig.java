@@ -10,8 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 @EnableWebSecurity
 public class AppSecurityConfig  extends WebSecurityConfigurerAdapter {
@@ -22,18 +25,27 @@ public class AppSecurityConfig  extends WebSecurityConfigurerAdapter {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private DataSource dataSource;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login", "/register")
                 .permitAll()
                 .antMatchers("/account/**").hasAuthority("USER")
+                 .and()
+                 .rememberMe().tokenRepository(persistentTokenRepository())
                 .and()
                 .formLogin(form -> form
                         .defaultSuccessUrl("/account/home")
                         .loginPage("/login")
                         .failureUrl("/login?error=true")
+                )
+                .logout(logout->logout
+                        .deleteCookies("dummyCookie")
                 );
+
     }
 
     @Override
@@ -55,5 +67,10 @@ public class AppSecurityConfig  extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authProvider());
     }
 
-
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+        db.setDataSource(dataSource);
+        return db;
+    }
 }
