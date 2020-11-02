@@ -34,17 +34,24 @@ public class AppSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/register")
                 .permitAll()
                 .antMatchers("/account/**").hasAuthority("USER")
+                 .and().requiresChannel().antMatchers("/account/**").requiresSecure()
                  .and()
                  .rememberMe().tokenRepository(persistentTokenRepository())
+                 .rememberMeCookieDomain("domain")
+                 .rememberMeCookieName("custom-remember-me-cookie")
+                 .userDetailsService(this.userDetailsService)
+                 .rememberMeServices(null)
+                 .tokenValiditySeconds(2000)
+                 .useSecureCookie(true)
+                 .and()
+                .formLogin()
+                .defaultSuccessUrl("/account/home")
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
+
                 .and()
-                .formLogin(form -> form
-                        .defaultSuccessUrl("/account/home")
-                        .loginPage("/login")
-                        .failureUrl("/login?error=true")
-                )
-                .logout(logout->logout
-                        .deleteCookies("dummyCookie")
-                );
+                .logout().deleteCookies("dummyCookie");
+
 
     }
 

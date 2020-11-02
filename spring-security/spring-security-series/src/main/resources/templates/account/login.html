@@ -23,6 +23,9 @@
       <div class="alert alert-success" role="alert" th:if="${verifiedAccountMsg != null}">
         <p th:text="${verifiedAccountMsg}"></p>
       </div>
+      <div class="alert alert-success" role="alert" th:if="${resetPasswordMsg != null}">
+        <p th:text="${resetPasswordMsg}"></p>
+      </div>
       <div class="alert alert-danger" role="alert" th:if="${tokenError != null}">
         <p th:text="${tokenError}"></p>
       </div>
@@ -81,7 +84,7 @@
       <!-- /.social-auth-links -->
 
       <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
+        <a href="#" data-toggle="modal" data-target="#forgotPasswordModel">I forgot my password</a>
       </p>
       <p class="mb-0">
         <a href="register" class="text-center">Register a new membership</a>
@@ -90,6 +93,7 @@
     <!-- /.login-card-body -->
   </div>
 </div>
+<div th:replace="account/forgotPassword :: forgotPasswordModel"></div>
 <!-- /.login-box -->
 
 <!-- jQuery -->
@@ -98,6 +102,7 @@
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
+<script src="../../plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#locale").change(function () {
