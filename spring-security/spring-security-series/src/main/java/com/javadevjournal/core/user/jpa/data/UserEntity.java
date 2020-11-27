@@ -4,6 +4,7 @@ package com.javadevjournal.core.user.jpa.data;
 import com.javadevjournal.core.security.jpa.SecureToken;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -86,5 +87,18 @@ public class UserEntity {
 
     public void addToken(final SecureToken token){
         tokens.add(token);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
     }
 }

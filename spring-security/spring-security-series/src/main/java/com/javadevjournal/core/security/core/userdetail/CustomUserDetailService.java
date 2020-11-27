@@ -2,6 +2,7 @@ package com.javadevjournal.core.security.core.userdetail;
 
 import com.javadevjournal.core.user.jpa.data.UserEntity;
 import com.javadevjournal.core.user.jpa.repository.UserRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,4 +30,5 @@ public class CustomUserDetailService implements UserDetailsService{
 
         return user;
     }
+
 }

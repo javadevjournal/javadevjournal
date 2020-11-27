@@ -110,10 +110,41 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">Weclome</h1>
-          </div><!-- /.col -->
+          </div>
+          <!-- /.col -->
          </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header"><h3 class="card-title">Your Active Sessions</h3>
+
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+              <thead>
+              <tr>
+                <th>Session ID</th>
+                <th>Last Used</th>
+                <th>Logout</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="activesession : ${currentSession}">
+                <td th:text="${activesession.sessionId}"></td>
+                <td th:text="${#calendars.format(activesession.lastRequest, 'yyyy-MM-dd HH:mm')}"></td>
+                <td>11-7-2014</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
     </div>
     <!-- /.content-header -->
 

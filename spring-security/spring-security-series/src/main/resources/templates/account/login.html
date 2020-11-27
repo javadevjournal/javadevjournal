@@ -29,6 +29,9 @@
       <div class="alert alert-danger" role="alert" th:if="${tokenError != null}">
         <p th:text="${tokenError}"></p>
       </div>
+      <div class="alert alert-danger" role="alert" th:if="${invalidSession != null}">
+        <p th:text="${invalidSession}"></p>
+      </div>
       <p class="login-box-msg">Sign in to start your session</p>
       <p th:if="${loginError}" class="error"></p>
       <form th:action="@{/login}" method="post">
