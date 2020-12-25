@@ -55,6 +55,91 @@ public class BinarySearchTree {
     }
 
     /**
+     * In order BST traversal allows to traverse tree in the sorted order.
+     * This traversal follow left->current-right pattern.
+     * <li>left sub-tree will be viisted first.</li>
+     * <li> Current node will be viisted after left traversal</li>
+     * <li>Right subtree will be visited in the end.</li>
+     */
+    public void inOrderTraversal(){
+        inOrderTraversal(root);
+    }
+
+    public void postOrderTraversal(){
+        postOrderTraversal(root);
+    }
+
+    public void preOrderTraversal(){
+        preOrderTraversal(root);
+    }
+
+
+    /*
+     Internal private method to do in order traversal.We will pass the
+     root node to start with and will visit the tree recursively using the following
+     path left-current-right
+    */
+    private void inOrderTraversal(Node node){
+
+        //We will continue until null or empty node is found
+        if(node!=null){
+
+            //visit the left subtree until the leaf node
+            inOrderTraversal(node.left);
+
+            //Print the node
+            System.out.println(node.data);
+
+            //process the same step for the right node
+            inOrderTraversal(node.right);
+        }
+    }
+
+
+    /*
+     Internal private method to do pre order traversal.We will pass the
+     root node to start with and will visit the tree recursively using the following
+     path current-left-right
+    */
+    private void preOrderTraversal(Node node){
+
+        //We will continue until null or empty node is found
+        if(node!=null){
+
+            //Print the node
+            System.out.println(node.data);
+
+            //visit the left subtree until the leaf node
+            inOrderTraversal(node.left);
+
+            //process the same step for the right node
+            inOrderTraversal(node.right);
+        }
+    }
+
+
+    /*
+     Internal private method to do post-order traversal.We will pass the
+     root node to start with and will visit the tree recursively using the following
+     path right-left-current
+    */
+    private void postOrderTraversal(Node node){
+
+        //We will continue until null or empty node is found
+        if(node!=null){
+
+            //visit the left subtree until the leaf node
+            inOrderTraversal(node.left);
+
+            //process the same step for the right node
+            inOrderTraversal(node.right);
+
+            //Print the node
+            System.out.println(node.data);
+        }
+    }
+
+    /**
      * Internal node class representing the node of the BST. This contains the following information
      * <li>data- actual data stored in the Tree</li>
      * <li>left - Left child of the node</li>

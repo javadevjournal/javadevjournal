@@ -12,7 +12,7 @@ public class BinarySearchTreeTest {
            /    \
           15     56
          /  \    /  \
-        9    11  54   61
+        9    11 54   61
        / \
       3   5 */
 
@@ -25,5 +25,17 @@ public class BinarySearchTreeTest {
         bst.insert(3);
         bst.insert(5);
         bst.insert(61);
+
+        //inorder traversal
+        bst.inOrderTraversal();
+
+        System.out.println("********* Pre Order *******************");
+        //pre-order
+        bst.preOrderTraversal();
+
+        System.out.println("************ Post Order ****************");
+
+        //post-order
+        bst.postOrderTraversal();
     }
 }
