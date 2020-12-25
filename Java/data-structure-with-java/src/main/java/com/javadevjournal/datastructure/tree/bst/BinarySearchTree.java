@@ -79,7 +79,7 @@ public class BinarySearchTree {
      root node to start with and will visit the tree recursively using the following
      path left-current-right
     */
-    private void inOrderTraversal(Node node){
+    public void inOrderTraversal(Node node){
 
         //We will continue until null or empty node is found
         if(node!=null){
@@ -101,7 +101,7 @@ public class BinarySearchTree {
      root node to start with and will visit the tree recursively using the following
      path current-left-right
     */
-    private void preOrderTraversal(Node node){
+    public void preOrderTraversal(Node node){
 
         //We will continue until null or empty node is found
         if(node!=null){
@@ -110,10 +110,10 @@ public class BinarySearchTree {
             System.out.println(node.data);
 
             //visit the left subtree until the leaf node
-            inOrderTraversal(node.left);
+            preOrderTraversal(node.left);
 
             //process the same step for the right node
-            inOrderTraversal(node.right);
+            preOrderTraversal(node.right);
         }
     }
 
@@ -123,21 +123,22 @@ public class BinarySearchTree {
      root node to start with and will visit the tree recursively using the following
      path right-left-current
     */
-    private void postOrderTraversal(Node node){
+    public void postOrderTraversal(Node node){
 
         //We will continue until null or empty node is found
         if(node!=null){
 
             //visit the left subtree until the leaf node
-            inOrderTraversal(node.left);
+            postOrderTraversal(node.left);
 
             //process the same step for the right node
-            inOrderTraversal(node.right);
+            postOrderTraversal(node.right);
 
             //Print the node
             System.out.println(node.data);
         }
     }
+
 
     /**
      * Internal node class representing the node of the BST. This contains the following information
