@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/account")
-public class HomeController {
+public class AccountController {
 
     @Autowired
     private SessionRegistry sessionRegistry;

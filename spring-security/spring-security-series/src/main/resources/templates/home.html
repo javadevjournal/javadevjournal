@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="core/head :: head">  <meta charset="utf-8">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!--<header th:replace="core/header :: header">
+  </header> -->
+  <nav th:replace="core/userProfile :: nav"></nav>
+  <!-- /.navbar -->
+
+
+  <div class="content-wrapper" style="margin-left: 0px!important">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Spring Security Course</h1>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Why Spring Security?</h5>
+
+                <p class="card-text">
+                  Why do we need Spring Security? What are the benefits?
+                </p>
+
+                <a href="#" class="card-link">Learn More</a>
+              </div>
+            </div>
+
+            <div class="card card-primary card-outline">
+              <div class="card-body">
+                <h5 class="card-title">How Spring Security Works?</h5>
+
+                <p class="card-text">
+                  How Spring security works internally? We will see in details how it works internally
+                </p>
+                <a href="#" class="card-link">Learn More</a>
+              </div>
+            </div><!-- /.card -->
+          </div>
+          <!-- /.col-md-6 -->
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="m-0">Video Lesson 1</h5>
+              </div>
+              <div class="card-body">
+                <h6 class="card-title">We will Start our journey with setting up our spring security course.</h6>
+                <a href="#" class="card-link">Start</a>
+              </div>
+            </div>
+            </div>
+          </div>
+          <!-- /.col-md-6 -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+          <!-- /.col-md-6 -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  </div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+
+<script th:src="@{/dist/js/pages/dashboard3.js}"></script>
+</body>
+</html>

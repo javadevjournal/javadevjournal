@@ -4,11 +4,12 @@ This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="core/header :: head">  <meta charset="utf-8">
+<head th:replace="core/head :: head">  <meta charset="utf-8">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-
+  <header th:replace="core/header :: header">
+  </header>
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->

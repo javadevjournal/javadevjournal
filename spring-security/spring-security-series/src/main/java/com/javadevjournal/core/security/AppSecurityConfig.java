@@ -1,5 +1,6 @@
 package com.javadevjournal.core.security;
 
+import com.javadevjournal.core.security.handlers.CustomSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +37,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login", "/register")
+                .antMatchers("/login", "/register","/home")
                 .permitAll()
                 .antMatchers("/account/**").hasAuthority("USER")
                 .and()
@@ -58,23 +59,36 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().defaultSuccessUrl("/account/home")
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
-
+                .successHandler(successHandler())
                 //logout configurations
                 .and()
                 .logout().deleteCookies("dummyCookie")
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/login");
 
-                //Session management
+                /*
                 .and()
                 .sessionManagement()
-                .maximumSessions(0)
-                .sessionRegistry(sessionRegistry());
-                //.invalidSessionUrl("/login?invalid-session=true")
-                //.sessionAuthenticationErrorUrl("/max-session-error") //session-authentication-error-url
-               // .maxSessionsPreventsLogin(true) //error-if-maximum-exceeded
+                .sessionFixation().none(); */
 
 
 
+
+
+
+
+    }
+
+    /**
+     * <p></p>Creating bean for the custom suucess handler. You can use the custom success handlers for
+     * different use cases like</p>
+     * <li> Redirect customer to different page page based on profile.</li>
+     * <li>Running some additional logic on post authentication before redirecting user</li>
+     * <p>Check the <code>successHandler()</code> in the <code>configure</code> section for configuration details.</p>
+     * @return Customer success handler
+     */
+    @Bean
+    public CustomSuccessHandler successHandler(){
+        return new CustomSuccessHandler();
     }
 
     @Bean
@@ -101,6 +115,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**", "/static/**");
     }
 
+    /**
+     * DAO authentication provider. This authentication provider will authenticate the user with the help of
+     * @UserdetailsService. This is based on the validating the user with the username and password.
+     * @return
+     */
     @Bean
     public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -109,11 +128,24 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
 
+    /**
+     * Authentication manager which will be invoked by Spring security filter chain. This authentication
+     * manager will delegate the work to the Authentication provider to
+     * authenticate the user. Look out for the @DaoAuth provider in the above section to see
+     * how it works with this.
+     * @param auth
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth){
         auth.authenticationProvider(authProvider());
     }
 
+    /**
+     * Using this to persist the remember-me token in the database for more secure approach.
+     * We are not usin gthe memory based remember-me cookie which is not very secure but saving the token in the
+     * DB for better security and secure validation.
+     * @return
+     */
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();

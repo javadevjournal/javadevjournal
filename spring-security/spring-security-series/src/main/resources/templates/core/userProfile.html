@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
@@ -13,34 +14,34 @@
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>
             </li>
+
         </ul>
 
-        <!-- SEARCH FORM -->
-        <form class="form-inline ml-3">
-            <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-        <div sec:authorize="isAuthenticated()">
-            <header class="main-header">
-                <div class="navbar-custom-menu">
-            <ul class="navbar-nav">
+        <ul class="navbar-nav ml-auto">
+            <li class="dropdown user user-menu" sec:authorize="hasAuthority('USER')">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="hidden-xs" sec:authentication="name"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- User image -->
+                    <li class="user-header">
+                        <img th:src="@{/dist/img/avatar5.png}" class="img-circle" alt="User Image">
+                        <p>
+                            Spring Security Course
+                            <small>Java Development Journal</small>
+                        </p>
+                    </li>
+<!--                    <div sec:authorize="isAuthenticated()">  </div>-->
+                    <li class="user-footer">
+                        <div class="pull-right">
+                            <a href="javascript: document.logoutForm.submit()" class="btn btn-default btn-flat">Sign out</a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                <input hidden type="submit" value="Sign Out"/>
+            </form>
+        </ul>
 
-            <li class="dropdown user user-menu">
-                <!--<a th:href="@{/logout}">Logout</a> -->
-            <a href="javascript: document.logoutForm.submit()" class="dropdown-toggle">Sign out</a>
-
-
-        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
-            <input hidden type="submit" value="Sign Out"/>
-        </form>
-            </ul>
-                </div>
-            </header>
-        </div>
     </nav>
