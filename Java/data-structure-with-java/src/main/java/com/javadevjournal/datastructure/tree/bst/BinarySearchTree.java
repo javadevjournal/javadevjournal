@@ -74,12 +74,53 @@ public class BinarySearchTree {
     }
 
 
+    // Delete the node from binary search tree
+    public boolean delete(int data){
+        return delete(root, data)!=null? true: false;
+    }
+
+    public boolean search(int data){
+        return search(data, root) !=null? true: false;
+    }
+
+    /**
+     * Internal method for searching element in the BST
+     * @param data
+     * @param root
+     * @return
+     */
+    private Node search(int data, Node root){
+
+        /*
+         This is the base case for coming out of recursion. We will return if
+         the node is null (not found) or if the node value is equal to the
+         search element (key found)
+         */
+        if(root ==null || root.data== data){
+            return root;
+        }
+
+        /*
+         We will keep moving to the left sub-tree recursively if the key is
+         less than the node value.
+         */
+        else if(data< root.data){
+            return search(data, root.left);
+        }
+
+        /*
+         We will moving to the right sub-tree if the key is greater than the node value.
+         */
+        return search(data, root.right);
+    }
+
+
     /*
-     Internal private method to do in order traversal.We will pass the
-     root node to start with and will visit the tree recursively using the following
-     path left-current-right
-    */
-    public void inOrderTraversal(Node node){
+    Internal private method to do in order traversal.We will pass the
+    root node to start with and will visit the tree recursively using the following
+    path left-current-right
+   */
+    private void inOrderTraversal(Node node){
 
         //We will continue until null or empty node is found
         if(node!=null){
@@ -101,7 +142,7 @@ public class BinarySearchTree {
      root node to start with and will visit the tree recursively using the following
      path current-left-right
     */
-    public void preOrderTraversal(Node node){
+    private void preOrderTraversal(Node node){
 
         //We will continue until null or empty node is found
         if(node!=null){
@@ -123,7 +164,7 @@ public class BinarySearchTree {
      root node to start with and will visit the tree recursively using the following
      path right-left-current
     */
-    public void postOrderTraversal(Node node){
+    private void postOrderTraversal(Node node){
 
         //We will continue until null or empty node is found
         if(node!=null){
@@ -139,6 +180,53 @@ public class BinarySearchTree {
         }
     }
 
+    private Node delete(Node root, int data){
+        //this is the termination condition for our recursion call
+        if(root ==null){
+            return root;
+        }
+        //we will keep traversing the left subtree until the element is less than node data.
+        else if(root.data>data){
+            root.left = delete(root.left, data);
+        }
+        //we will keep traversing the right subtree until the element is greater than node data.
+        else if(root.data< data){
+            root.right = delete(root.right, data);
+        }
+        else{
+            /*we have found a potential match, mow we need to check
+            the 3 different cases to see which one should be executed.*/
+
+            // we are dealing with situation, where we have either one child or no child
+            if(root.left ==null){
+                return root.right;
+            }
+            else if(root.right == null){
+                return root.left;
+            }
+
+            /*this is the complex use case where element contains both left and right sub-tree
+            We will go with our algorithm to find the minimum element in the right sub-tree and
+            replace it followed by deletion
+            */
+            root.data = findMin(root.right);
+
+            root.right= delete(root.right, root.data);
+        }
+        return root;
+    }
+
+    private int findMin(Node node){
+        //we are assuming that it's the minimum value
+        int min = node.data;
+
+        //remember left sub-tree will have the minimum value.You can also use the same logic to implement BST without recursion.
+        while(node.left!=null){
+            min = node.left.data;
+            node = node.left;
+        }
+        return min;
+    }
 
     /**
      * Internal node class representing the node of the BST. This contains the following information
