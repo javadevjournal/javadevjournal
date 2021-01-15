@@ -21,6 +21,8 @@ public class UserEntity {
     private String password;
     private String token;
     private boolean accountVerified;
+    private int failedLoginAttempts;
+    private boolean loginDisabled;
 
     @OneToMany(mappedBy = "user")
     private Set<SecureToken> tokens;
@@ -87,6 +89,22 @@ public class UserEntity {
 
     public void addToken(final SecureToken token){
         tokens.add(token);
+    }
+
+    public int getFailedLoginAttempts() {
+        return failedLoginAttempts;
+    }
+
+    public void setFailedLoginAttempts(int failedLoginAttempts) {
+        this.failedLoginAttempts = failedLoginAttempts;
+    }
+
+    public boolean isLoginDisabled() {
+        return loginDisabled;
+    }
+
+    public void setLoginDisabled(boolean loginDisabled) {
+        this.loginDisabled = loginDisabled;
     }
 
     @Override

@@ -1,9 +1,13 @@
 package com.javadevjournal.core.security;
 
 import com.javadevjournal.core.security.handlers.CustomSuccessHandler;
+import com.javadevjournal.core.security.handlers.LoginAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationEventPublisher;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -60,6 +64,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
                 .successHandler(successHandler())
+                .failureHandler(failureHandler())
                 //logout configurations
                 .and()
                 .logout().deleteCookies("dummyCookie")
@@ -71,12 +76,14 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionFixation().none(); */
 
 
-
+               http.authorizeRequests().antMatchers("/admim/**").hasAuthority("ADMIN");
 
 
 
 
     }
+
+
 
     /**
      * <p></p>Creating bean for the custom suucess handler. You can use the custom success handlers for
@@ -89,6 +96,19 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CustomSuccessHandler successHandler(){
         return new CustomSuccessHandler();
+    }
+
+    @Bean
+    public LoginAuthenticationFailureHandler failureHandler(){
+        LoginAuthenticationFailureHandler failureHandler = new LoginAuthenticationFailureHandler();
+        failureHandler.setDefaultFailureUrl("/login?error=true");
+        return failureHandler;
+    }
+
+    @Bean
+    public AuthenticationEventPublisher authenticationEventPublisher
+            (ApplicationEventPublisher applicationEventPublisher) {
+        return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
     }
 
     @Bean

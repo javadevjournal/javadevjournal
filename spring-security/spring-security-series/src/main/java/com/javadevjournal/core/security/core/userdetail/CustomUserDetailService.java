@@ -25,7 +25,7 @@ public class CustomUserDetailService implements UserDetailsService{
         boolean enabled = !customer.isAccountVerified();
         UserDetails user = User.withUsername(customer.getEmail())
                 .password(customer.getPassword())
-                .disabled(enabled)
+                .disabled(customer.isLoginDisabled())
                 .authorities("USER").build();
 
         return user;

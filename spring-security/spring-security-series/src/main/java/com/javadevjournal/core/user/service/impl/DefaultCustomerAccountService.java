@@ -68,6 +68,7 @@ public class DefaultCustomerAccountService implements CustomerAccountService {
         userRepository.save(user);
     }
 
+
     protected void sendResetPasswordEmail(UserEntity user) {
         SecureToken secureToken= secureTokenService.createSecureToken();
         secureToken.setUser(user);
@@ -81,5 +82,12 @@ public class DefaultCustomerAccountService implements CustomerAccountService {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    public boolean loginDisabled(String username) {
+        UserEntity user = userRepository.findByEmail(username);
+        return user!=null ? user.isLoginDisabled() : false;
     }
 }

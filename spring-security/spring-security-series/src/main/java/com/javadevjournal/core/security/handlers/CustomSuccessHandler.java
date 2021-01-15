@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.security.web.savedrequest.SavedRequest;
 
 
 public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {

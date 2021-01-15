@@ -20,6 +20,7 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
+      <p th:text="${accountLocked}"></p>
       <div class="alert alert-success" role="alert" th:if="${verifiedAccountMsg != null}">
         <p th:text="${verifiedAccountMsg}"></p>
       </div>
@@ -35,12 +36,16 @@
       <p class="login-box-msg">Sign in to start your session</p>
       <p th:if="${loginError}" class="error"></p>
       <form th:action="@{/login}" method="post">
-        <div th:if="${param.error}">
+        <div th:if="${param.error!=null and accountLocked !=true}">
         <div class="alert alert-danger">
           <span th:text="#{login.error}"/>
         </div>
-
       </div>
+        <div th:if="${param.error!=null and accountLocked ==true}">
+          <div class="alert alert-danger">
+            <span th:text="#{user.account.locked}"/>
+          </div>
+        </div>
         <div class="input-group mb-3">
           <input type="email" class="form-control" name="username" placeholder="Email" autocomplete=”off”>
           <div class="input-group-append">
