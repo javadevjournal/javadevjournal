@@ -6,7 +6,7 @@ import com.javadevjournal.core.security.jpa.SecureToken;
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
-
+//
 @Entity
 @Table(name = "user")
 public class UserEntity {
