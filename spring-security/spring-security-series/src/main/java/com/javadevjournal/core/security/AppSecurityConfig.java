@@ -1,5 +1,6 @@
 package com.javadevjournal.core.security;
 
+import com.javadevjournal.core.security.handlers.CustomAccessDeniedHandler;
 import com.javadevjournal.core.security.handlers.CustomSuccessHandler;
 import com.javadevjournal.core.security.handlers.LoginAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
@@ -43,9 +45,10 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login", "/register","/home")
                 .permitAll()
-                .antMatchers("/account/**").hasAuthority("USER")
+                .antMatchers("/account/**").hasAuthority("CUSTOMER")
                 .and()
-
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+                 .and()
                 //Setting HTTPS for my account
                 .requiresChannel().anyRequest().requiresSecure()
                 .and()
@@ -96,6 +99,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CustomSuccessHandler successHandler(){
         return new CustomSuccessHandler();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
     }
 
     @Bean

@@ -4,6 +4,7 @@ package com.javadevjournal.core.user.jpa.data;
 import com.javadevjournal.core.security.jpa.SecureToken;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 ////
@@ -26,6 +27,26 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private Set<SecureToken> tokens;
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "user_groups",
+            joinColumns =@JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"
+    ))
+    private Set<Group> userGroups= new HashSet<>();
+
+    public void addUserGroups(Group group){
+        userGroups.add(group);
+        group.getUsers().add(this);
+    }
+
+    public void removeUserGroups(Group group){
+        userGroups.remove(group);
+        group.getUsers().remove(this);
+    }
 
     public Long getId() {
         return id;
@@ -118,5 +139,13 @@ public class UserEntity {
     @Override
     public int hashCode() {
         return Objects.hash(email);
+    }
+
+    public Set<Group> getUserGroups() {
+        return userGroups;
+    }
+
+    public void setUserGroups(Set<Group> userGroups) {
+        this.userGroups = userGroups;
     }
 }

@@ -8,7 +8,9 @@ import com.javadevjournal.core.exception.UserAlreadyExistException;
 import com.javadevjournal.core.security.jpa.SecureToken;
 import com.javadevjournal.core.security.token.SecureTokenService;
 import com.javadevjournal.core.security.token.repository.SecureTokenRepository;
+import com.javadevjournal.core.user.jpa.data.Group;
 import com.javadevjournal.core.user.jpa.data.UserEntity;
+import com.javadevjournal.core.user.jpa.repository.UserGroupRepository;
 import com.javadevjournal.core.user.jpa.repository.UserRepository;
 import com.javadevjournal.web.data.user.UserData;
 import org.apache.commons.lang3.BooleanUtils;
@@ -40,6 +42,9 @@ public class DefaultUserService implements UserService{
     @Autowired
     SecureTokenRepository secureTokenRepository;
 
+    @Autowired
+    UserGroupRepository groupRepository;
+
     @Value("${site.base.url.https}")
     private String baseURL;
 
@@ -51,9 +56,15 @@ public class DefaultUserService implements UserService{
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(user, userEntity);
         encodePassword(user, userEntity);
+        updateCustomerGroup(userEntity);
         userRepository.save(userEntity);
         sendRegistrationConfirmationEmail(userEntity);
 
+    }
+
+    private void updateCustomerGroup(UserEntity userEntity){
+        Group group= groupRepository.findByCode("customer");
+        userEntity.addUserGroups(group);
     }
 
     @Override

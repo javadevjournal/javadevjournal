@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="core/head :: head">  <meta charset="utf-8">
 </head>
 <body class="hold-transition sidebar-mini">
@@ -47,7 +48,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview" sec:authorize="hasAuthority('ADMIN')">>
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
