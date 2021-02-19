@@ -1,5 +1,8 @@
 package com.javadevjournal.datastructure.tree.rb;
 
+/**
+ * Red and black tree in Java
+ */
 public class RedBlackTree {
 
     private Node root;
