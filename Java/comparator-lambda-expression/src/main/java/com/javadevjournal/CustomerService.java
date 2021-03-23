@@ -23,7 +23,7 @@ public class CustomerService {
     private static void sortByFirstAndSecondName(){
         List<Customer> customers = getCustomers();
 
-        //Let's get the comparator
+        //Let's get the comparator for sorting
         Comparator<Customer> comparator = Comparator.comparing(Customer::getFirstName)
                 .thenComparing(Customer::getLastName);
 
