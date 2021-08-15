@@ -45,7 +45,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login", "/register","/home")
                 .permitAll()
-                .antMatchers("/account/**").hasAuthority("CUSTOMER")
+                .antMatchers("/account/**").hasAnyAuthority("CUSTOMER", "ADMIN")
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
                  .and()

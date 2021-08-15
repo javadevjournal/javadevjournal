@@ -50,5 +50,4 @@ public class CustomUserDetailService implements UserDetailsService{
 
         return authorities;
     }
-
 }
