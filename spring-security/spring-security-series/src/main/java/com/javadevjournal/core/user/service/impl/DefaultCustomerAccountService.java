@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import java.util.Objects;
 
@@ -25,25 +26,25 @@ import java.util.Objects;
 @Service("customerAccountService")
 public class DefaultCustomerAccountService implements CustomerAccountService {
 
-    @Autowired
+    @Resource
     UserService userService;
 
-    @Autowired
+    @Resource
     private SecureTokenService secureTokenService;
 
-    @Autowired
+    @Resource
     SecureTokenRepository secureTokenRepository;
 
     @Value("${site.base.url.https}")
     private String baseURL;
 
-    @Autowired
+    @Resource
     private EmailService emailService;
 
-    @Autowired
+    @Resource
     private UserRepository userRepository;
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
 

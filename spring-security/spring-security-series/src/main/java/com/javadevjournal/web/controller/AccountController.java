@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequestMapping("/account")
 public class AccountController {
 
-    @Autowired
+    @Resource
     private SessionRegistry sessionRegistry;
 
     @GetMapping("/home")

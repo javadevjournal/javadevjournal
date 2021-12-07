@@ -1,16 +1,23 @@
 package com.javadevjournal.core.security;
 
+import com.javadevjournal.core.security.authentication.CustomAuthenticationProvider;
+import com.javadevjournal.core.security.filter.CustomAuthenticationFilter;
+import com.javadevjournal.core.security.filter.CustomHeaderAuthFilter;
 import com.javadevjournal.core.security.handlers.CustomAccessDeniedHandler;
 import com.javadevjournal.core.security.handlers.CustomSuccessHandler;
 import com.javadevjournal.core.security.handlers.LoginAuthenticationFailureHandler;
+import com.javadevjournal.core.security.web.authentication.CustomWebAuthenticationDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
+import org.springframework.ldap.core.support.BaseLdapPathContextSource;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.ldap.LdapAuthenticationProviderConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,12 +27,18 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.ldap.authentication.BindAuthenticator;
+import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
+import org.springframework.security.ldap.authentication.LdapAuthenticator;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 @EnableWebSecurity
@@ -39,6 +52,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+
+    @Resource
+    CustomAuthenticationProvider customAuthenticationProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -63,7 +79,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //Login configurations
                 .and()
-                .formLogin().defaultSuccessUrl("/account/home")
+                .formLogin()
+                .defaultSuccessUrl("/account/home")
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
                 .successHandler(successHandler())
@@ -80,13 +97,28 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                http.authorizeRequests().antMatchers("/admim/**").hasAuthority("ADMIN");
-
-
+               http.addFilterAfter(customHeaderAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 
 
     }
 
+    @Bean
+    public CustomHeaderAuthFilter customHeaderAuthFilter(){
+        return new CustomHeaderAuthFilter();
+    }
 
+
+    private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource() {
+
+        return new AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails>() {
+            @Override
+            public CustomWebAuthenticationDetails buildDetails(
+                    HttpServletRequest request) {
+                return new CustomWebAuthenticationDetails(request);
+            }
+
+        };
+    }
 
     /**
      * <p></p>Creating bean for the custom suucess handler. You can use the custom success handlers for
@@ -104,6 +136,15 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AccessDeniedHandler accessDeniedHandler(){
         return new CustomAccessDeniedHandler();
+    }
+
+    @Bean
+    public CustomAuthenticationFilter authFilter() throws Exception {
+        CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
+        filter.setAuthenticationManager(authenticationManagerBean());
+        filter.setAuthenticationFailureHandler(failureHandler());
+        filter.setAuthenticationSuccessHandler(successHandler());
+        return filter;
     }
 
     @Bean
@@ -165,7 +206,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth){
-        auth.authenticationProvider(authProvider());
+        //auth.authenticationProvider(authProvider());
+        auth.authenticationProvider(customAuthenticationProvider)
+                .authenticationProvider(authProvider());
     }
 
     /**
@@ -179,5 +222,20 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
         db.setDataSource(dataSource);
         return db;
+    }
+
+    //Spring security LDAP configurations
+
+    @Bean
+    BindAuthenticator authenticator(BaseLdapPathContextSource contextSource) {
+        BindAuthenticator authenticator = new BindAuthenticator(contextSource);
+        authenticator.setUserDnPatterns(new String[] { "uid={0},ou=people" });
+        return authenticator;
+    }
+
+
+    @Bean
+    LdapAuthenticationProvider authenticationProvider(LdapAuthenticator authenticator) {
+        return new LdapAuthenticationProvider(authenticator);
     }
 }
