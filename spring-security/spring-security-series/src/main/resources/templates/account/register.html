@@ -18,10 +18,16 @@
     </div>
   </div>
     <div class="card">
+
         <div class="card-body register-card-body">
             <div class="alert alert-success" role="alert" th:if="${registrationMsg != null}">
                 <p th:text="${registrationMsg}"></p>
             </div>
+            <div th:if="${registrationMsg != null}">
+                <img class="col-md-12" th:src="${qrCode}" />
+                <p th:text="${qrCodeKey}"></p>
+            </div>
+            <div th:if="${registrationMsg == null}">
             <p class="login-box-msg">Register a new account</p>
             <form action="#" th:action="@{/register}" th:object="${userData}" method="post">
                 <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
@@ -90,7 +96,7 @@
                     <!-- /.col -->
                 </div>
             </form>
-
+            </div>
             <a href="login" class="text-center">I already have an Account</a>
         </div>
         <!-- /.form-box -->

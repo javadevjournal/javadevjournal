@@ -28,26 +28,21 @@ public class CustomUserDetailService implements UserDetailsService{
     UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        //Let's split the email to get both values
-        String[] usernameAndCustomToken = StringUtils.split(email, String.valueOf(Character.LINE_SEPARATOR));
+    public CustomUser loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        //if the String arrays is empty or size is not equal to 2, let's throw exception
-        if(Objects.isNull(usernameAndCustomToken) || usernameAndCustomToken.length !=2){
-            throw new UsernameNotFoundException("User not found");
-        }
-        final String userName = usernameAndCustomToken[0];
-        final String customToken = usernameAndCustomToken[1]; // use it based on your requirement
-        final UserEntity customer = userRepository.findByEmail(userName);
+        final UserEntity customer = userRepository.findByEmail(email);
         if (customer == null) {
             throw new UsernameNotFoundException(email);
         }
         boolean enabled = !customer.isAccountVerified(); // we can use this in case we want to activate account after customer verified the account
-        UserDetails user = User.withUsername(customer.getEmail())
-                .password(customer.getPassword())
-                .disabled(customer.isLoginDisabled())
-                .authorities(getAuthorities(customer)).build()
-                ;
+        CustomUser user = CustomUser.CustomUserBuilder.aCustomUser().
+                 withUsername(customer.getEmail())
+                .withPassword(customer.getPassword())
+                .withEnabled(customer.isLoginDisabled())
+                .withAuthorities(getAuthorities(customer))
+                .withSecret(customer.getSecret())
+                .withAccountNonLocked(false)
+                .build();
 
         return user;
     }

@@ -6,13 +6,16 @@ import com.javadevjournal.core.exception.InvalidTokenException;
 import com.javadevjournal.core.exception.UnkownIdentifierException;
 import com.javadevjournal.core.exception.UserAlreadyExistException;
 import com.javadevjournal.core.security.jpa.SecureToken;
+import com.javadevjournal.core.security.mfa.MFATokenManager;
 import com.javadevjournal.core.security.token.SecureTokenService;
 import com.javadevjournal.core.security.token.repository.SecureTokenRepository;
 import com.javadevjournal.core.user.jpa.data.Group;
 import com.javadevjournal.core.user.jpa.data.UserEntity;
 import com.javadevjournal.core.user.jpa.repository.UserGroupRepository;
 import com.javadevjournal.core.user.jpa.repository.UserRepository;
+import com.javadevjournal.web.data.user.MfaTokenData;
 import com.javadevjournal.web.data.user.UserData;
+import dev.samstevens.totp.exceptions.QrGenerationException;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -21,32 +24,36 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import java.util.Objects;
 
 @Service("userService")
 public class DefaultUserService implements UserService{
 
-    @Autowired
+    @Resource
     private UserRepository userRepository;
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Resource
     private EmailService emailService;
 
-    @Autowired
+    @Resource
     private SecureTokenService secureTokenService;
 
-    @Autowired
+    @Resource
     SecureTokenRepository secureTokenRepository;
 
-    @Autowired
+    @Resource
     UserGroupRepository groupRepository;
 
     @Value("${site.base.url.https}")
     private String baseURL;
+
+    @Resource
+    private MFATokenManager mfaTokenManager;
 
     @Override
     public void register(UserData user) throws UserAlreadyExistException {
@@ -57,6 +64,7 @@ public class DefaultUserService implements UserService{
         BeanUtils.copyProperties(user, userEntity);
         encodePassword(user, userEntity);
         updateCustomerGroup(userEntity);
+        userEntity.setSecret(mfaTokenManager.generateSecretKey());
         userRepository.save(userEntity);
         sendRegistrationConfirmationEmail(userEntity);
 
@@ -66,6 +74,7 @@ public class DefaultUserService implements UserService{
         Group group= groupRepository.findByCode("customer");
         userEntity.addUserGroups(group);
     }
+
 
     @Override
     public boolean checkIfUserExist(String email) {
@@ -83,7 +92,7 @@ public class DefaultUserService implements UserService{
         emailContext.buildVerificationUrl(baseURL, secureToken.getToken());
         try {
             emailService.sendMail(emailContext);
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -115,6 +124,16 @@ public class DefaultUserService implements UserService{
             throw new UnkownIdentifierException("unable to find account or account is not active");
         }
         return user;
+    }
+
+    @Override
+    public MfaTokenData mfaSetup(String email) throws UnkownIdentifierException, QrGenerationException {
+        UserEntity user= userRepository.findByEmail(email);
+        if(user == null ){
+            // we will ignore in case account is not verified or account does not exists
+            throw new UnkownIdentifierException("unable to find account or account is not active");
+        }
+       return new MfaTokenData( mfaTokenManager.getQRCode( user.getSecret()), user.getSecret());
     }
 
     private void encodePassword(UserData source, UserEntity target){

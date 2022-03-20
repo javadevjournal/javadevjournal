@@ -18,8 +18,9 @@ public class CustomHeaderAuthFilter extends GenericFilterBean {
 
         var request = (HttpServletRequest) servletRequest;
         var response = (HttpServletResponse)servletResponse;
-
+        filterChain.doFilter(servletRequest, servletResponse);
         //if header is missing , send un-athorized error back
+        /*
         String authHeader = request.getHeader("X-HEADER");
         if(StringUtils.isEmpty(authHeader)){
             response.setStatus(
@@ -27,6 +28,6 @@ public class CustomHeaderAuthFilter extends GenericFilterBean {
         }
         else{
             filterChain.doFilter(servletRequest, servletResponse);
-        }
+        } */
     }
 }

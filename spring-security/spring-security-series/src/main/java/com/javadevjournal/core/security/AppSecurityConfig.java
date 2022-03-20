@@ -2,36 +2,28 @@ package com.javadevjournal.core.security;
 
 import com.javadevjournal.core.security.authentication.CustomAuthenticationProvider;
 import com.javadevjournal.core.security.filter.CustomAuthenticationFilter;
-import com.javadevjournal.core.security.filter.CustomHeaderAuthFilter;
 import com.javadevjournal.core.security.handlers.CustomAccessDeniedHandler;
 import com.javadevjournal.core.security.handlers.CustomSuccessHandler;
 import com.javadevjournal.core.security.handlers.LoginAuthenticationFailureHandler;
 import com.javadevjournal.core.security.web.authentication.CustomWebAuthenticationDetails;
+import com.javadevjournal.core.security.web.authentication.CustomWebAuthenticationDetailsSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
-import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.ldap.LdapAuthenticationProviderConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.ldap.authentication.BindAuthenticator;
-import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
-import org.springframework.security.ldap.authentication.LdapAuthenticator;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
@@ -47,14 +39,17 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     UserDetailsService userDetailsService;
 
-    @Autowired
+    @Resource
     PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Resource
     private DataSource dataSource;
 
     @Resource
-    CustomAuthenticationProvider customAuthenticationProvider;
+    private CustomAuthenticationProvider customAuthenticationProvider;
+
+    @Resource
+    private CustomWebAuthenticationDetailsSource authenticationDetailsSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -68,7 +63,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Setting HTTPS for my account
                 .requiresChannel().anyRequest().requiresSecure()
                 .and()
-
                 // Remember me configurations
                 .rememberMe().tokenRepository(persistentTokenRepository())
                 .rememberMeCookieDomain("domain")
@@ -85,6 +79,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error=true")
                 .successHandler(successHandler())
                 .failureHandler(failureHandler())
+                .authenticationDetailsSource(authenticationDetailsSource) //injecting custom authenitcation source
                 //logout configurations
                 .and()
                 .logout().deleteCookies("dummyCookie")
@@ -97,15 +92,16 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                http.authorizeRequests().antMatchers("/admim/**").hasAuthority("ADMIN");
-               http.addFilterAfter(customHeaderAuthFilter(), UsernamePasswordAuthenticationFilter.class);
+               //http.addFilterAfter(customHeaderAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 
 
     }
 
-    @Bean
+
+   /* @Bean
     public CustomHeaderAuthFilter customHeaderAuthFilter(){
         return new CustomHeaderAuthFilter();
-    }
+    } */
 
 
     private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource() {
@@ -138,14 +134,14 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomAccessDeniedHandler();
     }
 
-    @Bean
+   /* @Bean
     public CustomAuthenticationFilter authFilter() throws Exception {
         CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManagerBean());
         filter.setAuthenticationFailureHandler(failureHandler());
         filter.setAuthenticationSuccessHandler(successHandler());
         return filter;
-    }
+    } */
 
     @Bean
     public LoginAuthenticationFailureHandler failureHandler(){
@@ -188,14 +184,13 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
      * DAO authentication provider. This authentication provider will authenticate the user with the help of
      * @UserdetailsService. This is based on the validating the user with the username and password.
      * @return
-     */
+
     @Bean
-    public DaoAuthenticationProvider authProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setPasswordEncoder(passwordEncoder);
+    public CustomAuthenticationProvider authProvider() {
+        CustomAuthenticationProvider authenticationProvider = new CustomAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
         return authenticationProvider;
-    }
+    } */
 
     /**
      * Authentication manager which will be invoked by Spring security filter chain. This authentication
@@ -206,10 +201,10 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth){
-        //auth.authenticationProvider(authProvider());
-        auth.authenticationProvider(customAuthenticationProvider)
-                .authenticationProvider(authProvider());
+        auth.authenticationProvider(customAuthenticationProvider);
+        //auth.authenticationProvider(customAuthenticationProvider).authenticationProvider(authProvider());
     }
+
 
     /**
      * Using this to persist the remember-me token in the database for more secure approach.
@@ -226,6 +221,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     //Spring security LDAP configurations
 
+    /*
     @Bean
     BindAuthenticator authenticator(BaseLdapPathContextSource contextSource) {
         BindAuthenticator authenticator = new BindAuthenticator(contextSource);
@@ -237,5 +233,5 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     LdapAuthenticationProvider authenticationProvider(LdapAuthenticator authenticator) {
         return new LdapAuthenticationProvider(authenticator);
-    }
+    } */
 }

@@ -1,9 +1,12 @@
 package com.javadevjournal.web.controller.user;
 
 import com.javadevjournal.core.exception.InvalidTokenException;
+import com.javadevjournal.core.exception.UnkownIdentifierException;
 import com.javadevjournal.core.exception.UserAlreadyExistException;
 import com.javadevjournal.core.user.service.UserService;
+import com.javadevjournal.web.data.user.MfaTokenData;
 import com.javadevjournal.web.data.user.UserData;
+import dev.samstevens.totp.exceptions.QrGenerationException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import static com.javadevjournal.ApplicationConstant.REDIRECT;
@@ -27,10 +31,10 @@ public class RegistrationController {
 
     private static final String REDIRECT_LOGIN= "redirect:/login";
 
-    @Autowired
+    @Resource
     private UserService userService;
 
-    @Autowired
+    @Resource
     private MessageSource messageSource;
 
     @GetMapping
@@ -47,7 +51,11 @@ public class RegistrationController {
         }
         try {
             userService.register(userData);
-        }catch (UserAlreadyExistException e){
+            MfaTokenData mfaData = userService.mfaSetup(userData.getEmail());
+            model.addAttribute("qrCode", mfaData.getQrCode());
+            model.addAttribute("qrCodeKey", mfaData.getMfaCode());
+            model.addAttribute("qrCodeSetup", true);
+        }catch (UserAlreadyExistException | QrGenerationException | UnkownIdentifierException e){
             bindingResult.rejectValue("email", "userData.email","An account already exists for this email.");
             model.addAttribute("registrationForm", userData);
             return "account/register";

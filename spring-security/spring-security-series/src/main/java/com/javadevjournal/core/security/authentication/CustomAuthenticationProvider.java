@@ -1,50 +1,51 @@
 package com.javadevjournal.core.security.authentication;
 
-import org.springframework.security.authentication.AuthenticationProvider;
+
+import com.javadevjournal.core.security.core.userdetail.CustomUser;
+import com.javadevjournal.core.security.mfa.MFATokenManager;
+import com.javadevjournal.core.security.web.authentication.CustomWebAuthenticationDetails;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 
 @Component
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Resource
-    UserDetailsService userDetailsService;
+    private MFATokenManager mfaTokenManager;
 
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        final String username = (authentication.getPrincipal() == null) ? "NONE_PROVIDED" : authentication.getName();
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
-        if (StringUtils.isEmpty(username)) {
-            throw new BadCredentialsException("invalid login details");
+    @Autowired
+    public CustomAuthenticationProvider(UserDetailsService userDetailsService) {
+        super.setUserDetailsService(userDetailsService);
+    }
+
+    protected void additionalAuthenticationChecks(UserDetails userDetails,
+                                                  UsernamePasswordAuthenticationToken authentication)
+            throws AuthenticationException {
+
+        super.additionalAuthenticationChecks(userDetails, authentication);
+
+        //token check
+        CustomWebAuthenticationDetails authenticationDetails = (CustomWebAuthenticationDetails) authentication.getDetails();
+        CustomUser user = (CustomUser) userDetails;
+        String mfaToken = authenticationDetails.getToken();
+        if(!mfaTokenManager.verifyTotp(mfaToken,user.getSecret())){
+            throw new BadCredentialsException(messages.getMessage(
+                    "AbstractUserDetailsAuthenticationProvider.badCredentials",
+                    "Bad credentials"));
         }
-        // get user details using Spring security user details service
-        UserDetails user = null;
-        try {
-            user = userDetailsService.loadUserByUsername(username);
-
-        } catch (UsernameNotFoundException exception) {
-            throw new BadCredentialsException("invalid login details");
-        }
-        return createSuccessfulAuthentication(authentication, user);
     }
 
-    private Authentication createSuccessfulAuthentication(final Authentication authentication, final UserDetails user) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), authentication.getCredentials(), user.getAuthorities());
-        token.setDetails(authentication.getDetails());
-        return token;
-    }
 
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return authentication.equals(UsernamePasswordAuthenticationToken.class);
-    }
 }

@@ -25,6 +25,9 @@ public class UserEntity {
     private int failedLoginAttempts;
     private boolean loginDisabled;
 
+    private boolean mfaEnabled;
+    private String secret;
+
     @OneToMany(mappedBy = "user")
     private Set<SecureToken> tokens;
 
@@ -126,6 +129,22 @@ public class UserEntity {
 
     public void setLoginDisabled(boolean loginDisabled) {
         this.loginDisabled = loginDisabled;
+    }
+
+    public boolean isMfaEnabled() {
+        return mfaEnabled;
+    }
+
+    public void setMfaEnabled(boolean mfaEnabled) {
+        this.mfaEnabled = mfaEnabled;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 
     @Override

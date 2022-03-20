@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
 
-    private final String token;
+    private String token;
     /**
      * Records the remote address and will also set the session Id if a session already
      * exists (it won't create one).
@@ -39,5 +39,13 @@ public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), token);
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
