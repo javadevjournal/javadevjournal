@@ -47,7 +47,7 @@ public class CustomerService {
         customers.sort(Comparator.comparingInt(Customer::getAge));
 
         //pure lambda expression
-        Collections.sort(customers, (c1, c2) -> c1.getAge() - c1.getAge()); //we careful when using this as it can cause overflow
+        Collections.sort(customers, (c1, c2) -> c1.getAge() - c2.getAge()); //we careful when using this as it can cause overflow
     }
 
     private static List<Customer> getCustomers(){
