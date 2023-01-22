@@ -8,7 +8,7 @@ Java and Spring development tutorials
 - [Spring Boot][Spring Boot]
 - [Spring][Spring]
 - [Spring MVC][Spring MVC]
-- Spring Security
+- [Spring Security][Spring Security]
 - [REST API][REST API]
 - [Shopizer][Shopizer]
 
@@ -91,6 +91,7 @@ Find the `main` class and run it.
 [Spring]: https://www.javadevjournal.com/category/spring/ "Spring"
 [Spring Boot]: https://www.javadevjournal.com/category/spring-boot/ "Spring Boot"
 [Spring MVC]: https://www.javadevjournal.com/category/spring-mvc/ "Spring MVC"
+[Spring Security]: https://www.javadevjournal.com/spring-security-tutorial/ "Spring Security Tutorial"
 [REST API]: https://www.javadevjournal.com/category/spring/rest/ "REST API"
 [Shopizer]: https://www.javadevjournal.com/category/shopizer/ "Shopizer"
 [Spring Core Interview Q/A]: https://www.javadevjournal.com/spring/spring-interview-questions/ "Spring Core Interview Q/A"
