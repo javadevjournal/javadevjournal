@@ -1,7 +1,7 @@
 # Java Dev Journal
 Java and Spring development tutorials
 
-**[Java Dev Journal][Java Dev Journal]** is a technical blog which publish articles, blog post on the following topics:
+**[Java Dev Journal][Java Dev Journal]** is a technical blog which publish articles, blog posts on the following topics:
 
 
 - [Java][Java]
@@ -15,7 +15,7 @@ Java and Spring development tutorials
 
 ## Spring Boot Course
 
-If you are starting with the Spring Boot, we have a free course on the Spring Boot.Our free Spring Boot course start from the basic and bring you to the speed with the advance concepts of the Spring Boot.The course includes free video lessons to help you lean the concepts more easily.
+If you are starting with Spring Boot development, we have a free course about it on our website! Our free Spring Boot course starts from the basics and brings you to the speed with the advanced concepts of the Spring Boot technology.The course includes free video lessons to help you learn the concepts more easily.
 
 <img src="https://prod-acb5.kxcdn.com/wp-content/uploads/2018/02/spring-boot-icon-200x196.png" height="100">
 
@@ -23,18 +23,18 @@ If you are starting with the Spring Boot, we have a free course on the Spring Bo
 - [Spring Boot Video Lessons][Spring Boot Video Lessons]
 
 
-## Build REST API With Spring
+## Build a REST API With Spring
 
-Leanr fundamentals of building REST API with Spring. Our free course will help you to quickely start from the basics of the REST.This course help you to impliment these REST principles using Spring framework.
+Learn the fundamentals of building REST APIs with Spring. Our free course will help you to quickly start from the basics of the REST concept. This course will help you to implement these REST principles using the Spring Framework.
 
 <img src="https://prod-acb5.kxcdn.com/wp-content/uploads/2018/02/rest-icon-200x196-1.png" height="100">
 
 - [REST with Spring Series][REST with Spring Series]
 
 
-## Techinical Interview Series
+## Technical Interview Series
 
-If you are preparing for your next job interview, we have an interview series to help you prepare for your next job.
+If you are preparing for your next job interview, we have an interview series to help you prepare for it.
 
 - [Spring Core Interview Q/A][Spring Core Interview Q/A]
 - [Spring MVC Interview Questions with Answers][Spring MVC Interview Questions with Answers]
@@ -46,20 +46,20 @@ If you are preparing for your next job interview, we have an interview series to
 ## Source Code
 
 
-This repository contains the source code for all the artcile published on the [JavaDevJournal][JavaDevJournal].All these projects are maven based.You can download and run the project by following these steps:
+This repository contains the source code for all the articles published on the [JavaDevJournal][JavaDevJournal]. All these projects are Maven-based.You can download and run the projects by following these steps:
 
 
 
 
 ### Building the Project
 
-To build these mavens based projects,run the following command:
+To build these Maven-based projects, run the following command:
 `mvn clean install`
 
 
 ### Running Spring Boot Project
 
-To run a Spring Boot module run the command:
+To run a Spring Boot module, run the command:
 `mvn spring-boot:run `
 
 ### Running Java Project
