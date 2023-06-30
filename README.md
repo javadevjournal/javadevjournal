@@ -99,3 +99,18 @@ Find the `main` class and run it.
 [Spring Boot Interview Questions]: https://www.javadevjournal.com/spring-boot/spring-boot-interview-questions/ "Spring Boot Interview Questions"
 [Java Interview Questions]: https://www.javadevjournal.com/java/java-interview-questions/ "Java Interview Questions"
 [Java Dev Journal]: https://www.javadevjournal.com "Java Dev Journal"
+
+# Free Developer Tool
+Free Online Developer Tool
+
+**[Free Developers Tools][Free Developers Tools]** is a free toolset for developers to do some quick tasks like JSON validation, minification etc.Here are some of the free tool you can use
+  - [Free QR Generator][Free QR Generator]
+  - [Free HTML formatters][Free HTML formatters]
+  - [Free JSON formatters][Free JSON formatters]
+
+[Free Developers Tools]: https://www.freedataformatter.com "Free Developers Tools"
+[Free QR Generator]: https://www.freedataformatter.com/qr-code "Free QR Generator"
+[Free HTML formatters]: https://www.freedataformatter.com/formatter/html-formatter.htm "Free HTML formatters"
+[Free JSON formatters]: https://www.freedataformatter.com/formatter/json-formatter.html "Free JSON formatters"
+
+
